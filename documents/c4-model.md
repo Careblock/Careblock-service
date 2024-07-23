@@ -3,7 +3,7 @@
 
 ### I. System Context Diagram
 
-![System Context Diagram](path/to/image1.png)
+![L1_ Context diagram](https://github.com/user-attachments/assets/f18f6b22-7bb7-4afe-ad2d-07ac43001fd9)
 
 #### 1.1. CAREBLOCK [Software System]
 CAREBLOCK is the primary software system for medical records management. It interacts with various users and external systems.
@@ -76,7 +76,7 @@ CAREBLOCK interacts with external systems to store and process data:
 
 ### II. Container Diagram
 
-![Container Diagram](path/to/image2.png)
+![L2_ Container diagram](https://github.com/user-attachments/assets/43638237-f038-40ac-8ae9-e3a58f350e57)
 
 #### 2.1. Account Component
 The User Account Management component handles the account information of various user types such as patients, doctors, and administrators. It ensures the integrity and security of user data while supporting user authentication during system login and managing access rights based on roles. This component interacts with the Web Application to receive requests for registration, updates, deletion, and login from the web interface and sends responses regarding the request status. Additionally, it provides account information related to doctors' schedules to the Schedule Component and appointment information to the Appointment Component.
@@ -102,7 +102,7 @@ The CAREBLOCK system interacts with several external systems to securely and dis
 ### III. Component Diagram
 #### 3.1. Account Component
 
-![Account Component](path/to/image3.1.png)
+![Account component](https://github.com/user-attachments/assets/81a38881-c16e-4b61-a194-b760f602c751)
 
 ##### 3.1.1. Web Application
 - **Function**: Provides a web-based interactive interface built using ReactJS. Allows users (patients, doctors, administrators) to manage accounts, schedule appointments, and handle diagnostic information.
@@ -142,7 +142,7 @@ The CAREBLOCK system interacts with several external systems to securely and dis
 
 #### 3.2. Appointment Component
 
-![Appointment Component](path/to/image3.2.png)
+![Appoinment Component](https://github.com/user-attachments/assets/ec0573be-f208-4553-b298-9c742d1b113b)
 
 ##### 3.2.1. Appointment Controller
 - **Function**: Manages appointment scheduling: creating, updating, and canceling appointments between patients and doctors.
@@ -158,7 +158,7 @@ The CAREBLOCK system interacts with several external systems to securely and dis
 
 #### 3.3. Diagnostic Component
 
-![Diagnostic Component](path/to/image3.3.png)
+![Diagnostic Component](https://github.com/user-attachments/assets/e1a53312-7d10-4b89-acae-b03feb187bab)
 
 ##### 3.3.1. Diagnostic Controller
 - **Function**: Manages diagnostic data: storing diagnostic results, analyzing data, and generating reports.
@@ -178,7 +178,7 @@ The CAREBLOCK system interacts with several external systems to securely and dis
 
 #### 3.4. Schedule Component
 
-![Schedule Component](path/to/image3.4.png)
+![Schedule Component](https://github.com/user-attachments/assets/a1ba82be-9347-4349-bb99-1519c81cbb55)
 
 ##### 3.4.1. Schedule Controller
 - **Function**: Manages doctor schedules: creating, updating, and ensuring no conflicts with appointments.
@@ -190,7 +190,7 @@ The CAREBLOCK system interacts with several external systems to securely and dis
 
 #### 3.5. Medicine Component
 
-![Medicine Component](path/to/image3.5.png)
+![Medicine Component](https://github.com/user-attachments/assets/def2486e-1110-4405-a817-17949c94c7de)
 
 ##### 3.5.1. Medicine Controller
 - **Function**: Manages medicine information: creating, updating, and deleting medicine details.
@@ -199,57 +199,6 @@ The CAREBLOCK system interacts with several external systems to securely and dis
 ##### 3.5.2. Medicine Database
 - **Function**: Stores all medicine-related data: names, ingredients, uses, and dosages.
 - **Interaction**: Uses SQL Server for secure data storage. Interacts with the Medicine Controller for storing and retrieving data.
-
-#### 3.6. Relational Database
-
-![Relational Database](path/to/image3.6.png)
-
-##### 3.6.1. Relational Database
-- **Function**: Centralized storage for all system data: accounts, appointments, diagnoses, schedules, and medications.
-- **Interaction**: Uses SQL Server for secure and validated data storage. Interacts with all other components for storing and retrieving data.
-
-### IV. Code Component Diagram
-#### 4.1. Account Component Code Structure
-
-![Account Component Code](path/to/image4.1.png)
-
-- **AccountService**: Contains business logic for managing user accounts, including registration, updates, and deletion.
-- **AccountRepository**: Handles database interactions for account data using SQL queries and ORM.
-- **AccountController**: Manages HTTP requests related to accounts, interacts with the AccountService for processing.
-
-#### 4.2. Appointment Component Code Structure
-
-![Appointment Component Code](path/to/image4.2.png)
-
-- **AppointmentService**: Contains business logic for managing appointments, including creation, updates, and cancellations.
-- **AppointmentRepository**: Handles database interactions for appointment data using SQL queries and ORM.
-- **AppointmentController**: Manages HTTP requests related to appointments, interacts with the AppointmentService for processing.
-
-#### 4.3. Diagnostic Component Code Structure
-
-![Diagnostic Component Code](path/to/image4.3.png)
-
-- **DiagnosticService**: Contains business logic for managing diagnostic data, including storing results and generating reports.
-- **DiagnosticRepository**: Handles database interactions for diagnostic data using SQL queries and ORM.
-- **DiagnosticController**: Manages HTTP requests related to diagnostics, interacts with the DiagnosticService for processing.
-
-#### 4.4. Schedule Component Code Structure
-
-![Schedule Component Code](path/to/image4.4.png)
-
-- **ScheduleService**: Contains business logic for managing doctor schedules, including creation and updates.
-- **ScheduleRepository**: Handles database interactions for schedule data using SQL queries and ORM.
-- **ScheduleController**: Manages HTTP requests related to schedules, interacts with the ScheduleService for processing.
-
-#### 4.5. Medicine Component Code Structure
-
-![Medicine Component Code](path/to/image4.5.png)
-
-- **MedicineService**: Contains business logic for managing medicine information, including creation, updates, and deletion.
-- **MedicineRepository**: Handles database interactions for medicine data using SQL queries and ORM.
-- **MedicineController**: Manages HTTP requests related to medicines, interacts with the MedicineService for processing.
-
----
 
 ### Diagrams
 - **System Context Diagram**: Provides an overview of the entire system, showing the interactions between users and external systems.
