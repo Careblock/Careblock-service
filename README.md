@@ -112,7 +112,7 @@ Update the following settings in `appsettings.json`:
     ```
 ## System Requirements and Specifications
 
-Document details are written at this link.
+Document details are written at this [link](https://github.com/Careblock/Careblock-service/blob/main/documents/system-requirements-and-specifications.md).
 
 Summary of system requirements includes:
 
@@ -129,7 +129,7 @@ Summary of system requirements includes:
 
 ## Architectural Design C4 Model
 
-The system is designed according to the C4 model. Details at this link.
+The system is designed according to the C4 model. Details at this [link](https://github.com/Careblock/Careblock-service/blob/main/documents/c4-model.md).
 
 System design summary includes the following components:
 
