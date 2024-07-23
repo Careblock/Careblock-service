@@ -1,8 +1,7 @@
 # System Requirements and Specifications Document
 [Careblock]
 
-![System overview diagram](link-to-system-overview-diagram.jpg) 
-(If the image is too small you can view it [here](link-to-larger-image))
+![_System Requirements](https://github.com/user-attachments/assets/2c433318-1fee-4fe8-a6fe-31b57bd78a19)
 
 Here is the detailed documentation for each function in the CareBlock system as per the provided activity diagram:
 
