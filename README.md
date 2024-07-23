@@ -10,8 +10,10 @@ Careblock is an innovative healthcare application leveraging the security and tr
 2. [Installation](#installation)
 3. [Configuration](#configuration)
 4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [License](#license)
+5. [System Requirements and Specifications](#system-requirements-and-specifications)
+6. [Architectural Design C4 Model](#architectural-design-c4-model)
+7. [Contributing](#contributing)
+8. [License](#license)
 
 ## Features
 
@@ -108,6 +110,34 @@ Update the following settings in `appsettings.json`:
     cd publish
     dotnet careblock.dll
     ```
+## System Requirements and Specifications
+
+Document details are written at this link.
+
+Summary of system requirements includes:
+
+- **Login/Register**
+- **Manage Personal Information**
+- **Make an Appointment (Patient)**
+- **Work Schedule Allocation (Admin)**
+- **Doctor Management (Admin)**
+- **Medication Management (Admin)**
+- **Manage Examination Packages (Admin)**
+- **Bill Payment (Patient)**
+- **Statistics of Medical Examination History**
+- **Export Examination Results (Doctor)**
+
+## Architectural Design C4 Model
+
+The system is designed according to the C4 model. Details at this link.
+
+System design summary includes the following components:
+
+- **Account Component**
+- **Appointment Component**
+- **Schedule Component**
+- **Medicine Component**
+- **Diagnostic Component**
 
 ## Contributing
 
