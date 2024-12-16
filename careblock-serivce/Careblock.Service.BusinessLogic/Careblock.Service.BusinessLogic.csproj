@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Careblock.Data.Repository\Careblock.Data.Repository.csproj" />
+      <ProjectReference Include="..\Careblock.Model.Web\Careblock.Model.Web.csproj" />
+      <ProjectReference Include="..\Careblock.Service.Helper\Careblock.Service.Helper.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
+      <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    </ItemGroup>
+
+</Project>
