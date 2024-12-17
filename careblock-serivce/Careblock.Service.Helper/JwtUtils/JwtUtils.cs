@@ -5,7 +5,6 @@ using System.Text;
 using Careblock.Data.Repository.Interface;
 using Careblock.Model.Database;
 using Careblock.Model.Shared.Authorization;
-using Careblock.Model.Shared.Enum;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -29,18 +28,21 @@ public class JwtUtils : IJwtUtils
         // generate token that is valid for 15 minutes
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-        var role = (byte) account.Role;
+
+        var roleNames = _unitOfWork.AccountRoleRepository.GetAll().Where(x => Guid.Equals(x.AccountId, account.Id)).Select(x => x).Join(_unitOfWork.RoleRepository.GetAll(), accountRole => accountRole.RoleId, role => role.Id, (accountRole, role) => role.Name).ToList();
+
+        var roles = string.Join(',', string.Join(',', roleNames));
     
         var claims = new List<Claim>
         {
             new Claim("id", account.Id.ToString()),
-            new Claim("role", role.ToString()),
+            new Claim("roles", roles),
         };
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(15),
+            Expires = DateTime.Now.AddMinutes(15),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 
@@ -84,8 +86,8 @@ public class JwtUtils : IJwtUtils
             // token is a cryptographically strong random sequence of values
             Token = Convert.ToHexString(RandomNumberGenerator.GetBytes(64)),
             // token is valid for 7 days
-            Expires = DateTime.UtcNow.AddDays(7),
-            Created = DateTime.UtcNow,
+            Expires = DateTime.Now.AddDays(7),
+            Created = DateTime.Now,
             CreatedByIp = ipAddress
         };
 

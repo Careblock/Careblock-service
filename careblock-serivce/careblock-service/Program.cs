@@ -4,6 +4,7 @@ using careblock_service.Helper;
 using Careblock.Model.Shared.Authorization;
 using Careblock.Service.Helper.Common;
 using Microsoft.OpenApi.Models;
+using Careblock.Service.BusinessLogic.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,8 @@ builder.Services.AddSwaggerGen(opt =>
 
 builder.RegisterDependencies();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,6 +78,8 @@ app.UseCors(x => x
     .AllowCredentials());
 
 app.UseHttpsRedirection();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.UseAuthorization();
 

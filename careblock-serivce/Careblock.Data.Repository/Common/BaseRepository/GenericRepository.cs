@@ -125,7 +125,7 @@ public class GenericRepository<T> : IGenericRepository<T>
         this.Entities.Entry(entity).State = EntityState.Modified;
         if (!string.IsNullOrWhiteSpace(propertyName))
         {
-            // todo: need confirm again about [TargetEntry!.State]
+            // Todo: need confirm again about [TargetEntry!.State]
             this.Entities.Entry(entity).Reference(propertyName).TargetEntry!.State = EntityState.Modified;
         }
     }

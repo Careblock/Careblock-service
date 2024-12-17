@@ -8,26 +8,27 @@ public class Medicine
     [Key]
     public Guid Id { get; set; }
 
-    [ForeignKey(nameof(Organization))] 
-    public Guid OrganizationId { get; set; }
+    [Required]
+    [ForeignKey(nameof(MedicineType))] 
+    public int MedicineTypeId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
-    public decimal Price { get; set; }
+    public double Price { get; set; }
 
-    public string? Note { get; set; }
+    public byte UnitPrice { get; set; }
 
-    public string? Avatar { get; set; }
+    public string? Description { get; set; }
 
-    public bool? IsDeleted { get; set; }
-
-    public string? CreatedBy { get; set; }
-
-    public string? ModifiedBy { get; set; }
+    public string? Thumbnail { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
 
-    public virtual Organization Organization { get; set; }
+    public bool? IsDeleted { get; set; }
+
+    public virtual ICollection<MedicineResult> MedicineResults { get; set; }
+
+    public virtual MedicineType MedicineType { get; set; }
 }

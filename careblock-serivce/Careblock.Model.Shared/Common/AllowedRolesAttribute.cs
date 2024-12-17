@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Careblock.Model.Shared.Enum;
+﻿using Careblock.Model.Shared.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace careblock_service.Authorization;
 
@@ -12,8 +12,8 @@ public class AllowedRolesAttribute : ValidationAttribute
             return ValidationResult.Success; // Or return ValidationResult.ErrorMessage if null roles are not allowed
         }
 
-        var allowedRoles = new[] { Role.Patient, Role.Doctor };
-        var role = (Role)value;
+        var allowedRoles = new[] { Constants.PATIENT, Constants.DOCTOR };
+        var role = value;
 
         if (!allowedRoles.Contains(role))
         {

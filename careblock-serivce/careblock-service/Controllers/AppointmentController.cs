@@ -4,9 +4,11 @@ using Careblock.Service.BusinessLogic.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Careblock.Model.Web.Appointment;
 using Careblock.Model.Shared.Enum;
+using Careblock.Model.Shared.Common;
 
 namespace careblock_service.Controllers;
 
+[AdminAuthorize(new string[] { Constants.DOCTOR, Constants.PATIENT, Constants.MANAGER, Constants.ADMIN })]
 [ApiController]
 [Route("[controller]")]
 public class AppointmentController : BaseController
@@ -18,6 +20,8 @@ public class AppointmentController : BaseController
         _appointmentService = appointmentService;
     }
 
+    #region GET
+
     [AllowAnonymous]
     [HttpGet("get-all")]
     public async Task<ApiResponse<List<AppointmentDto>>> GetAll()
@@ -26,9 +30,9 @@ public class AppointmentController : BaseController
         return new ApiResponse<List<AppointmentDto>>(result, true);
     }
 
-    [HttpGet]
-    [Route("{id:guid}")]
-    public async Task<ApiResponse<AppointmentDto?>> Get(Guid id)
+    [AllowAnonymous]
+    [HttpGet("{id:guid}")]
+    public async Task<ApiResponse<AppointmentDto?>> Get([FromRoute] Guid id)
     {
         bool isSucccess = true;
         var result = await _appointmentService.GetById(id);
@@ -40,42 +44,64 @@ public class AppointmentController : BaseController
         return new ApiResponse<AppointmentDto?>(result, isSucccess);
     }
 
-    [HttpGet]
-    [Route("get-by-patient/{patientId:guid}")]
-    public async Task<ApiResponse<List<AppointmentHistoryDto>?>> GetByPatientID(Guid patientId)
+    [AllowAnonymous]
+    [HttpGet("get-by-patient/{patientId:guid}")]
+    public async Task<ApiResponse<List<AppointmentHistoryDto>?>> GetByPatientID([FromRoute] Guid patientId)
     {
         var result = await _appointmentService.GetByPatientID(patientId);
         return new ApiResponse<List<AppointmentHistoryDto>?>(result, true);
     }
 
-    [HttpGet]
-    [Route("update-status/{status}/{id}")]
-    public async Task<ApiResponse<bool>> UpdateStatus(AppointmentStatus status, Guid id)
+    [AllowAnonymous]
+    [HttpGet("update-status/{status}/{id}")]
+    public async Task<ApiResponse<bool>> UpdateStatus([FromRoute] AppointmentStatus status, [FromRoute] Guid id)
     {
         var result = await _appointmentService.UpdateStatus(status, id);
         return new ApiResponse<bool>(result);
     }
 
-    [HttpPost]
-    [Route("create")]
+    #endregion
+
+
+    #region POST
+
+    [AllowAnonymous]
+    [HttpPost("get-by-organization")]
+    public async Task<ApiResponse<AppointmentHistories>> GetByOrganizationID([FromBody] AppointmentRequest appointmentRequest)
+    {
+        var result = await _appointmentService.GetByOrganizationID(appointmentRequest);
+        return new ApiResponse<AppointmentHistories>(result, true);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("create")]
     public async Task<ApiResponse<Guid>> Create([FromBody] AppointmentFormDto appointment)
     {
         var result = await _appointmentService.Create(appointment);
+        if (Guid.Equals(result, Guid.Empty)) return new ApiResponse<Guid>(result, false);
         return new ApiResponse<Guid>(result);
     }
 
-    [HttpPost]
-    [Route("update")]
-    public async Task<ApiResponse<bool>> Update(AppointmentDto appointment)
+    [AllowAnonymous]
+    [HttpPost("update")]
+    public async Task<ApiResponse<bool>> Update([FromBody] AppointmentDto appointment)
     {
         var result = await _appointmentService.Update(appointment);
         return new ApiResponse<bool>(result);
     }
 
-    [HttpDelete]
-    public async Task<ApiResponse<bool>> Delete(Guid id)
+    #endregion
+
+
+    #region DELETE
+
+    [AllowAnonymous]
+    [HttpDelete("{id:guid}")]
+    public async Task<ApiResponse<bool>> Delete([FromRoute] Guid id)
     {
         var result = await _appointmentService.Delete(id);
         return new ApiResponse<bool>(result);
     }
+
+    #endregion
 }

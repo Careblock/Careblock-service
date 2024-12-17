@@ -10,16 +10,14 @@ public class RefreshToken
 
     [ForeignKey(nameof(Account))]
     public Guid AccountId { get; set; }
-    
-    public Account Account { get; set; } = null!;
 
-    public string Token { get; set; } = null!;
+    public string Token { get; set; } = string.Empty;
 
     public DateTime Expires { get; set; }
 
     public DateTime Created { get; set; }
 
-    public string CreatedByIp { get; set; } = null!;
+    public string CreatedByIp { get; set; } = string.Empty;
 
     public DateTime? Revoked { get; set; }
 
@@ -31,5 +29,7 @@ public class RefreshToken
     public bool IsRevoked => Revoked != null;
 
     [NotMapped]
-    public bool IsActive => Revoked == null && DateTime.UtcNow < Expires;
+    public bool IsActive => Revoked == null && DateTime.Now < Expires;
+
+    public Account Account { get; set; } = null!;
 }

@@ -8,7 +8,7 @@ public interface IStorageService
 
     Task<byte[]?> GetFile(string fileName);
 
-    Task<bool> UploadFile(IFormFile? file);
+    Task<string> UploadFile(IFormFile? file);
     
     Task<bool> DeleteImage(string avatarUri);
 }

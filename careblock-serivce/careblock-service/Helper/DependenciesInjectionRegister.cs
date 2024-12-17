@@ -32,8 +32,17 @@ public static class DependenciesInjectionRegister
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IOrganizationService, OrganizationService>();
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-        builder.Services.AddScoped<IMedicalServiceService, MedicalServiceService>();
-        builder.Services.AddScoped<IDiagnosticService, DiagnosticService>();
-        builder.Services.AddScoped<IExaminationResultService, ExaminationResultService>();
+        builder.Services.AddScoped<IResultService, ResultService>();
+        builder.Services.AddScoped<IExaminationTypeService, ExaminationTypeService>();
+        builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+        builder.Services.AddScoped<IExaminationPackageService, ExaminationPackageService>();
+        builder.Services.AddScoped<IExaminationOptionService, ExaminationOptionService>();
+        builder.Services.AddScoped<IAppointmentDetailService, AppointmentDetailService>();
+        builder.Services.AddScoped<IMedicineTypeService, MedicineTypeService>();
+        builder.Services.AddScoped<IMedicineService, MedicineService>();
+        builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+        builder.Services.AddScoped<ISpecialistService, SpecialistService>();
+        builder.Services.AddScoped<INotificationService, NotificationService>();
+        builder.Services.AddScoped<ITimeSlotService, TimeSlotService>();
     }
 }

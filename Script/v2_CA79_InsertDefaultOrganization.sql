@@ -1,0 +1,11 @@
+﻿insert into Organization (Id, Code, Name, City, District, Address, Thumbnail) values 
+('137ba0de-8a88-4eba-a3cb-97067c1f72f2', 'HPT01', N'Đại học Y Dược', N'TP. HCM', N'5', N'215 Hồng Bàng, Phường 11, Quận 5, TP. HCM', 'https://cdn.haitrieu.com/wp-content/uploads/2022/08/logo-benh-vien-dai-hoc-y-duoc.png'),
+('5d00fe78-9fd7-43ed-b3c5-afc5ed36b2a8', 'HPT02', N'Chợ Rẫy', N'TP. HCM', N'5', N'201B Nguyễn Chí Thanh, P.12, Q.5, TP.HCM', 'https://cdn.haitrieu.com/wp-content/uploads/2022/08/logo-benh-vien-cho-ray.png'),
+('328fae84-0e59-49e4-9779-09f5980aa57e', 'HPT03', N'Đại học Y', N'Hà Nội', N'Đống Đa', N'1 Tôn Thất Tùng, Trung Tự, Đống Đa, Hà Nội', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxelnsw_QWffPB5mrD3mUnSqSKiVk1YRp7Sg&s'),
+('c7cc9b9b-e880-4f87-9728-e2c48ab781ba', 'HPT04', N'FV', N'Hà Nội', N'7', N'6 Nguyễn Lương Bằng, Phường Tân Phú, Quận 07, TP. HCM', 'https://www.cimigo.com/wp-content/uploads/2021/07/FV-hospital.png'),
+('b4b05ea8-a161-4780-981b-163870c7efde', 'HPT05', N'Mỹ (AIH)', N'TP. HCM', N'An Phú', N'199 Nguyễn Hoàng, Phường An Phú, TP. Thủ Đức, TP. Hồ Chí Minh', 'https://cdn.nhanlucnganhluat.vn/uploads/images/1701D819/logo/2020-04/637223738299883716_logo.png'),
+('72a628bc-4138-414b-8cea-9b91ab9e1660', 'HPT06', N'Việt Pháp', N'Hà Nội', N'Đống Đa', N'1 Phương Mai, Đống Đa, Hà Nội', 'https://www.hfh.com.vn/sites/default/files/Logo_HFH.png'),
+('4fff6f82-ee58-4b29-8279-7baabe990054', 'HPT07', N'Đa khoa Quốc tế Mytour', N'Hà Nội', N'Hai Bà Trưng', N'Khu đô thị Times City, 458 Minh Khai, Quận Hai Bà Trưng, Hà Nội', 'https://downloadlogomienphi.com/sites/default/files/logos/download-logo-vector-mytour-vn-mien-phi.jpg'),
+('9a1a94a6-2848-4f5d-b26c-3b37108536b1', 'HPT08', N'Việt Đức', N'Hà Nội', N'Hoàn Kiếm', N'40 Tràng Thi, Hoàn Kiếm, Hà Nội', 'https://novamedjsc.com/wp-content/uploads/2022/12/BVVD-removebg-preview-1.png'),
+('9a1b9c19-d0ae-4608-b7e3-6533b2fcecbe', 'HPT09', N'Hạnh Phúc', N'Bình Dương', N'Thuận An', N'18 Đại Lộ Bình Dương, Thuận An, Bình Dương', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQkbYahwAPS5aJlbDJCtPjtxxV5S5Md0BxTg&s'),
+('fe71cfe6-5f31-4011-8c20-f2dadfe91f7e', 'HPT10', N'Bạch Mai', N'Hà Nội', N'Đống Đa', N'78, Đường Giải Phóng, Phương Mai, Đống Đa, Hà Nội', 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Logo-Benh-Vien-Bach-Mai-Gr.png');

@@ -5,9 +5,9 @@ using Careblock.Model.Database;
 
 namespace Careblock.Data.Repository;
 
-public class ExaminationResultRepository : GenericRepository<ExaminationResult>, IExaminationResultRepository
+public class ResultRepository : GenericRepository<Result>, IResultRepository
 {
-    public ExaminationResultRepository(IDbContext context) : base(context)
+    public ResultRepository(IDbContext context) : base(context)
     {
     }
 }

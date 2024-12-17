@@ -6,23 +6,25 @@ public class PatientDto
 {
     public Guid Id { get; set; }
 
-    public string Firstname { get; set; } = string.Empty;
-
-    public string Lastname { get; set; } = string.Empty;
-
-    public DateTime? DateOfBirth { get; set; }
-
-    public Gender Gender { get; set; }
-
-    public BloodType? BloodType { get; set; }
-
-    public string? Phone { get; set; }
-
-    public byte Role { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     public string? Avatar { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public string? Reason { get; set; }
+
+    public DateTime? DateOfBirth { get; set; }
+
+    public string? ExaminationPackageName { get; set; }
+
+    public string Address { get; set; } = string.Empty;
+
+    public string? Email { get; set; }
+
+    public Gender? Gender { get; set; }
+
+    public string? Phone { get; set; }
+
+    public DateTime? StartDateExpectation { get; set; }
 
     public Guid? AppointmentId { get; set; }
 }

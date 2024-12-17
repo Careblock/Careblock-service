@@ -69,11 +69,11 @@ public class StorageService : IStorageService
         }
     }
 
-    public async Task<bool> UploadFile(IFormFile? file)
+    public async Task<string> UploadFile(IFormFile? file)
     {
         try
         {
-            if (file == null || file.Length == 0) return false;
+            if (file == null || file.Length == 0) return string.Empty;
 
             var blobClient = new BlobClient(_azureConnectionStrings, Constants.AzureFileContainerName, file.FileName);
             using (var stream = file.OpenReadStream())
@@ -82,16 +82,16 @@ public class StorageService : IStorageService
                 
                 if (res.GetRawResponse().Status == (int)HttpStatusCode.Created)
                 {
-                    return true;
+                    return blobClient.Uri.ToString();
                 }
             }
 
-            return false;
+            return string.Empty;
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            return false;
+            return string.Empty;
         }
     }
 

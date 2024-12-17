@@ -23,7 +23,6 @@ public class JwtMiddleware
             {
                 // attach account to context on successful jwt validation
                 context.Items["Account"] = await dataContext.Accounts.FindAsync(accountId);
-                var a = context.Items["Account"];
             }
         }
         await _next(context);

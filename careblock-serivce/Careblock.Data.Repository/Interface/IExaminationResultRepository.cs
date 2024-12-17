@@ -3,7 +3,7 @@ using Careblock.Model.Database;
 
 namespace Careblock.Data.Repository.Interface;
 
-public interface IExaminationResultRepository : IGenericRepository<ExaminationResult>
+public interface IResultRepository : IGenericRepository<Result>
 {
     
 }

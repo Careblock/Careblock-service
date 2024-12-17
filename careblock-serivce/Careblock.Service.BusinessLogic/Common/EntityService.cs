@@ -15,6 +15,11 @@ public class EntityService<T> : IEntityService<T>
         this._repository = repository;
     }
 
+    public virtual async Task<IEnumerable<T>?> GetAllAsync()
+    {
+        return await this._repository.GetAll().ToListAsync();
+    }
+
     public virtual async Task<T?> GetByIdAsync<TDataType>(TDataType id)
     {
         return await this._repository.GetByIdAsync(id);
@@ -31,17 +36,6 @@ public class EntityService<T> : IEntityService<T>
         return await this._unitOfWork.CommitAsync() > 0 ? result : default(T);
     }
 
-    public async Task<bool> DeleteById<TDataType>(TDataType id)
-    {
-        var obj = await this._repository.GetByIdAsync(id);
-        if (obj == null)
-        {
-            throw new Exception("Couldn't find the object");
-        }
-
-        return await this.DeleteAsync(obj);
-    }
-    /// <inheritdoc />
     public virtual async Task<bool> UpdateAsync(T entity)
     {
         if (entity == null)
@@ -53,7 +47,17 @@ public class EntityService<T> : IEntityService<T>
         return (await this._unitOfWork.CommitAsync()) > 0;
     }
 
-    /// <inheritdoc />
+    public async Task<bool> DeleteById<TDataType>(TDataType id)
+    {
+        var obj = await this._repository.GetByIdAsync(id);
+        if (obj == null)
+        {
+            throw new Exception("Couldn't find the object");
+        }
+
+        return await this.DeleteAsync(obj);
+    }
+
     public virtual async Task<bool> DeleteAsync(T entity)
     {
         if (entity == null)
@@ -67,11 +71,5 @@ public class EntityService<T> : IEntityService<T>
         }
 
         return false;
-    }
-
-    /// <inheritdoc />
-    public virtual async Task<IEnumerable<T>?> GetAllAsync()
-    {
-        return await this._repository.GetAll().ToListAsync();
     }
 }
