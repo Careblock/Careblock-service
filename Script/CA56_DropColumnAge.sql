@@ -1,0 +1,1 @@
+alter table Accounts drop column Age;

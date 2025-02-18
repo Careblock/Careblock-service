@@ -1,0 +1,2 @@
+alter table Notifications
+add OriginId uniqueidentifier null

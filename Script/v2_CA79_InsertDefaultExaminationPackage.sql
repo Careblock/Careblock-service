@@ -1,0 +1,7 @@
+﻿insert into ExaminationPackage (Id, OrganizationId, ExaminationTypeId, Name, Thumbnail, IsDeleted) values
+('a7e7c0b7-5a20-4ce9-9195-189b8ded6527', 'FE71CFE6-5F31-4011-8C20-F2DADFE91F7E', 3, N'Gói khám sức khỏe tổng quát cơ bản cho nam', 'https://cdn.bookingcare.vn/fo/w640/2019/09/12/093819goi-kham-suc-khoe-co-ban.jpg', 0),
+('181e9e7c-2699-41bd-971f-11166812b2ab', 'FE71CFE6-5F31-4011-8C20-F2DADFE91F7E', 3, N'Gói khám sức khỏe tổng quát cơ bản cho nữ', 'https://cdn.bookingcare.vn/fo/w640/2019/09/12/093819goi-kham-suc-khoe-co-ban.jpg', 0),
+('00fd784b-f840-4dc5-8cf7-7f4b75b781f4', 'FE71CFE6-5F31-4011-8C20-F2DADFE91F7E', 3, N'Gói khám sức khỏe tiền hôn nhân cho cho nam', 'https://cdn.bookingcare.vn/fo/w640/2022/05/30/094819-thn-nam.jpeg', 0),
+('c45edd32-2352-4585-95f8-2cc109802706', 'FE71CFE6-5F31-4011-8C20-F2DADFE91F7E', 3, N'Gói khám sức khỏe tiền hôn nhân cho cho nữ', 'https://cdn.bookingcare.vn/fo/w640/2022/05/30/101828-thn-nu.jpeg', 0),
+('d710bdd5-b59e-4f2d-b508-b75d02b9a431', '137BA0DE-8A88-4EBA-A3CB-97067C1F72F2', 3, N'Gói khám sức khỏe tổng quát tiêu chuẩn dành cho nam', 'https://cdn.bookingcare.vn/fo/w640/2020/09/09/235248-tam-soat-ung-thu-nam.jpg', 0),
+('83d62343-c3f7-4b90-ac84-07ffb22532cd', '137BA0DE-8A88-4EBA-A3CB-97067C1F72F2', 3, N'Gói khám sức khỏe tổng quát tiêu chuẩn dành cho nữ', 'https://cdn.bookingcare.vn/fo/w640/2020/09/09/213041-goi-kham-nu-chuyen-sau-1.jpg', 0);
