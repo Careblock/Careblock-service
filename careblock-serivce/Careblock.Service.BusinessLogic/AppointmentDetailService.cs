@@ -7,6 +7,7 @@ using Careblock.Service.BusinessLogic.Common;
 using Careblock.Service.BusinessLogic.Interface;
 using Microsoft.EntityFrameworkCore;
 using Careblock.Model.Shared.Enum;
+using Careblock.Model.Web.Payment;
 
 namespace Careblock.Service.BusinessLogic;
 
@@ -16,13 +17,15 @@ public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppoi
     private readonly DatabaseContext _dbContext;
     private readonly IStorageService _storageService;
     private readonly IResultService _resultService; 
+    private readonly IPaymentService _paymentService;
 
-    public AppointmentDetailService(IUnitOfWork unitOfWork, DatabaseContext dbContext, IStorageService storageService, IResultService resultService) : base(unitOfWork, unitOfWork.AppointmentDetailRepository)
+    public AppointmentDetailService(IUnitOfWork unitOfWork, DatabaseContext dbContext, IStorageService storageService, IResultService resultService, IPaymentService paymentService) : base(unitOfWork, unitOfWork.AppointmentDetailRepository)
     {
         _unitOfWork = unitOfWork;
         _dbContext = dbContext;
         _storageService = storageService;
         _resultService = resultService; 
+        _paymentService = paymentService;
     }
 
     public async Task<List<AppointmentDetailDto>> GetAll()
@@ -83,7 +86,6 @@ public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppoi
             appointment.DoctorId = appointmentDetailForm.DoctorId;
             appointment.Doctor = theDoctor;
 
-
             _dbContext.Appointments.Update(appointment);
 
             // Get total price
@@ -114,10 +116,26 @@ public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppoi
             {
                 Id = !string.IsNullOrEmpty(appointmentDetailForm.ResultId) ? Guid.Parse(appointmentDetailForm.ResultId) : Guid.NewGuid(),
                 SignHash = appointmentDetailForm.SignHash,
+                ManagerWalletAddress = appointmentDetailForm.ManagerWalletAddress,
                 AppointmentId = appointmentDetailForm.AppointmentId,
                 DiagnosticUrl = pdfUrl,
                 HashName = appointmentDetailForm.ResultName,
                 Message = string.Empty,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
+            });
+
+            var examinationPackage = await _dbContext.ExaminationPackages.Where(x => Guid.Equals(x.Id, appointment.ExaminationPackageId)).FirstAsync() ?? throw new AppException("Examination Package not found");
+            var paymentMethod = await _dbContext.PaymentMethods.FirstAsync() ?? throw new AppException("Payment Method not found");
+
+            // Insert payment into db
+            await _paymentService.Create(new PaymentFormDto
+            {
+                AppointmentId = appointmentDetailForm.AppointmentId,
+                Name = examinationPackage.Name,
+                PaymentMethodId = paymentMethod.Id,
+                Status = PaymentValue.UnPaid,
+                Total = totalPrice ?? 0,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
             });

@@ -54,6 +54,14 @@ public class AccountController : BaseController
     }
 
     [AllowAnonymous]
+    [HttpGet("get-managers-org/{organizationId}")]
+    public async Task<ApiResponse<List<DoctorDto>>> GetManagersOrg([FromRoute] Guid organizationId)
+    {
+        var result = await _accountService.GetManagersOrg(organizationId);
+        return new ApiResponse<List<DoctorDto>>(result, true);
+    }
+
+    [AllowAnonymous]
     [HttpGet("get-scheduled-patient/{status}/{doctorID}")]
     public async Task<ApiResponse<List<PatientDto>>> GetScheduledPatient([FromRoute] AppointmentStatus status, [FromRoute] Guid doctorID)
     {
@@ -87,6 +95,14 @@ public class AccountController : BaseController
     public async Task<ApiResponse<bool>> GrantPermission([FromRoute] Guid userID, [FromBody] PermissionRequest permissions)
     {
         var result = await _accountService.GrantPermission(userID, permissions.Permissions);
+        return new ApiResponse<bool>(result, true);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("grant-sign-permission")]
+    public async Task<ApiResponse<bool>> GrantSignPermission([FromBody] GrantSignRequest grantSignRequest)
+    {
+        var result = await _accountService.GrantSignPermission(grantSignRequest);
         return new ApiResponse<bool>(result, true);
     }
 

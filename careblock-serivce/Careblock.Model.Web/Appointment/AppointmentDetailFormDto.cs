@@ -18,7 +18,10 @@ public class AppointmentDetailFormDto
     public IFormFile? FilePDF { get; set; }
 
     public string? ResultId { get; set; }
+
     public string? ResultName { get; set; }
+
     public string? SignHash { get; set; }
 
+    public string? ManagerWalletAddress { get; set; }
 }

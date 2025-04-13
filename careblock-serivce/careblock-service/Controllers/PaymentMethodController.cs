@@ -1,6 +1,6 @@
 ﻿using careblock_service.Authorization;
 using careblock_service.ResponseModel;
-using Careblock.Model.Web.Examination;
+using Careblock.Model.Web.Payment;
 using Careblock.Service.BusinessLogic.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Careblock.Model.Database;

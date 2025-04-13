@@ -68,4 +68,6 @@ public class Appointment
     public virtual ICollection<Payment> Payments { get; set; }
 
     public virtual Result Result { get; set; }
+
+    public virtual ExaminationPackageReview? Review { get; set; }
 }

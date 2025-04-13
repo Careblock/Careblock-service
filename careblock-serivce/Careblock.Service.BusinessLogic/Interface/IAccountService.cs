@@ -7,12 +7,14 @@ public interface IAccountService
 {
     Task<AccountDto> GetById(Guid id);
     Task<List<DoctorDto>> GetAllDoctor();
-    Task<List<DoctorDto>> GetDoctorsOrg(Place place, Guid doctorID);
+    Task<List<DoctorDto>> GetDoctorsOrg(Place place, Guid doctorID); 
+    Task<List<DoctorDto>> GetManagersOrg(Guid organizationId); 
     Task<List<PatientDto>> GetScheduledPatient(AppointmentStatus status, Guid doctorID);
     Task<DataDefaultDto> GetDataDefault(Guid appointmentId);
     Task<AccountDto> Update(Guid id, AccountRequest account);
     Task<bool> RemoveDoctorFromOrg(Guid doctorID);
     Task<bool> GrantPermission(Guid userID, List<string> permissions);
+    Task<bool> GrantSignPermission(GrantSignRequest grantSignRequest);
     Task<Guid> Register(AccountFormDto model);
     Task<bool> HasAccount(string stakeId); 
     Task<bool> ChooseDepartment(Guid userId, ChooseDepartmentRequest request); 

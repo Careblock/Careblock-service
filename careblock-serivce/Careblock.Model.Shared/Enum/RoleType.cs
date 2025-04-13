@@ -6,4 +6,5 @@ public enum RoleType : byte
     DOCTOR = 2,
     MANAGER = 3,
     ADMIN = 4,
+    MANAGER_SIGN = 5
 }

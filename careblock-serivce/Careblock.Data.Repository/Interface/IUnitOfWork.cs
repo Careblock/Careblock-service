@@ -8,6 +8,8 @@ public interface IUnitOfWork: IUnitOfWorkBase
 
     IAccountRoleRepository AccountRoleRepository { get; }
 
+    IPermissionRoleRepository PermissionRoleRepository { get; }
+
     IRefreshTokenRepository RefreshTokenRepository { get; }
     
     IOrganizationRepository OrganizationRepository { get; }
@@ -18,6 +20,8 @@ public interface IUnitOfWork: IUnitOfWorkBase
 
     IPaymentMethodRepository PaymentMethodRepository { get; }
 
+    IPaymentRepository PaymentRepository { get; }
+
     IMedicineTypeRepository MedicineTypeRepository { get; }
 
     IMedicineRepository MedicineRepository { get; }
@@ -25,6 +29,8 @@ public interface IUnitOfWork: IUnitOfWorkBase
     ISpecialistRepository SpecialistRepository { get; }
 
     IExaminationOptionRepository ExaminationOptionRepository { get; }
+
+    IExaminationPackageReviewRepository ExaminationPackageReviewRepository { get; }
 
     ITimeSlotRepository TimeSlotRepository { get; }
 

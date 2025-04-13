@@ -82,6 +82,7 @@ public class AppointmentService : EntityService<Appointment>, IAppointmentServic
             .Include(a => a.Doctor)
             .Include(b => b.Organization)
             .Include(b => b.ExaminationPackage)
+            .Include(d => d.Review)
             .Select(apm => new AppointmentHistoryDto
             {
                 Id = apm.Id,
@@ -106,7 +107,9 @@ public class AppointmentService : EntityService<Appointment>, IAppointmentServic
                 StartDateReality = apm.StartDateReality,
                 EndDateReality = apm.EndDateReality,
                 StartDateExpectation = apm.StartDateExpectation,
-                EndDateExpectation = apm.EndDateExpectation
+                EndDateExpectation = apm.EndDateExpectation, 
+                Feedback = apm.Review != null ? apm.Review.Content : "", 
+                Rating = apm.Review != null ? apm.Review.Rating : null, 
             }).Where(x => Guid.Equals(x.PatientId, patientId))
             .OrderByDescending(x => x.CreatedDate)
             .ToListAsync();

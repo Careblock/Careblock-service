@@ -1,4 +1,4 @@
-﻿namespace Careblock.Model.Web.Examination;
+﻿namespace Careblock.Model.Web.Payment;
 
 public class PaymentMethodFormDto
 {

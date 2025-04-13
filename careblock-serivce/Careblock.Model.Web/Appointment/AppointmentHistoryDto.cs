@@ -58,4 +58,8 @@ public class AppointmentHistoryDto
 
 
     public List<ResultDto>? Results { get; set; }
+
+    public string? Feedback { get; set; }
+
+    public int? Rating { get; set; }
 }

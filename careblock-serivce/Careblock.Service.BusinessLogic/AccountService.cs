@@ -231,6 +231,65 @@ public class AccountService : EntityService<Account>, IAccountService
             .ToListAsync();
     }
 
+    public async Task<List<DoctorDto>> GetManagersOrg(Guid organizationId)
+    {
+        return await _dbContext.Accounts
+        .Join(_dbContext.AccountRoles,
+              acc => acc.Id,
+              ar => ar.AccountId,
+              (acc, ar) => new { acc, ar })
+        .Join(_dbContext.Departments,
+              combined => combined.acc.DepartmentId,
+              dep => dep.Id,
+              (combined, dep) => new { combined.acc, combined.ar, dep })
+        .Join(_dbContext.Roles,
+              combined => combined.ar.RoleId,
+              role => role.Id,
+              (combined, role) => new { combined.acc, combined.ar, combined.dep, role })
+        .Where(x => (x.ar.RoleId == (int)RoleType.MANAGER || x.ar.RoleId == (int)RoleType.MANAGER_SIGN) && Guid.Equals(x.dep.OrganizationId, organizationId) && x.acc.IsDisable == false)
+        .GroupBy(x => new
+        {
+            x.acc.Id,
+            x.acc.Avatar,
+            x.acc.CreatedDate,
+            x.acc.DateOfBirth,
+            x.acc.DepartmentId,
+            DepartmentName = x.dep.Name,
+            x.acc.Email,
+            x.acc.Firstname,
+            x.acc.Gender,
+            x.acc.IdentityId,
+            x.acc.IsDisable,
+            x.acc.Lastname,
+            x.acc.ModifiedDate,
+            x.acc.Phone,
+            x.acc.Seniority,
+            x.acc.StakeId
+        })
+        .Select(x => new DoctorDto
+        {
+            Id = x.Key.Id,
+            Avatar = x.Key.Avatar,
+            CreatedDate = x.Key.CreatedDate,
+            DateOfBirth = x.Key.DateOfBirth,
+            DepartmentId = x.Key.DepartmentId,
+            DepartmentName = x.Key.DepartmentName,
+            Email = x.Key.Email,
+            Firstname = x.Key.Firstname,
+            Gender = x.Key.Gender,
+            IdentityId = x.Key.IdentityId,
+            IsDisable = x.Key.IsDisable,
+            Lastname = x.Key.Lastname ?? string.Empty,
+            ModifiedDate = x.Key.ModifiedDate,
+            Phone = x.Key.Phone,
+            Seniority = x.Key.Seniority,
+            StakeId = x.Key.StakeId,
+            Roles = x.Select(r => r.role.Name).ToList(),
+        })
+        .OrderByDescending(x => x.CreatedDate)
+        .ToListAsync();
+    }
+
     public async Task<List<PatientDto>> GetScheduledPatient(AppointmentStatus status, Guid doctorID)
     {
         try
@@ -250,7 +309,7 @@ public class AccountService : EntityService<Account>, IAccountService
                 && a.Status == status
                 && a.DoctorId != null && Guid.Equals(a.DoctorId, doctorID)
                 && Guid.Equals(a.OrganizationId, organizationId)
-                && a.StartDateExpectation > DateTime.Now)
+                && ((a.Status == AppointmentStatus.Active && a.StartDateExpectation > DateTime.Now) || a.Status != AppointmentStatus.Active))
             .OrderBy(a => a.StartDateExpectation)
             .Select(a => new PatientDto
             {
@@ -287,28 +346,12 @@ public class AccountService : EntityService<Account>, IAccountService
             Guid departmentId = _dbContext.Accounts.Where(acc => Guid.Equals(acc.Id, appointment.DoctorId)).FirstAsync().Result.DepartmentId ?? Guid.Empty;
             Guid organizationId = _dbContext.Departments.Where(dep => Guid.Equals(dep.Id, departmentId)).FirstAsync().Result.OrganizationId;
 
-            var signerWalletAddress =
-                _dbContext.Accounts.Join(_dbContext.AccountRoles,
-                acc => acc.Id,
-                acr => acr.AccountId,
-                (acc, acr) =>
-                    new
-                    {
-                        acr.RoleId,
-                        acc.DepartmentId,
-                        acc.WalletAddress
-                    })
-                .Join(_dbContext.Departments,
-                combined => combined.DepartmentId,
-                dep => dep.Id,
-                (combined, dep) =>
-                new
-                {
-                    combined.RoleId,
-                    dep.OrganizationId,
-                    combined.WalletAddress
-                })
-                .Where(combined => Guid.Equals(combined.OrganizationId, organizationId) && combined.RoleId == (int)RoleType.MANAGER).FirstOrDefaultAsync().Result;
+                var signerWalletAddress = (
+                from acc in _dbContext.Accounts
+                join acr in _dbContext.AccountRoles on acc.Id equals acr.AccountId
+                where acr.RoleId == (int)RoleType.MANAGER_SIGN
+                select acc.WalletAddress
+        ).FirstOrDefaultAsync().Result;
 
             var result = await _unitOfWork.AppointmentRepository.GetAll()
                 .Include(a => a.Organization)
@@ -331,9 +374,8 @@ public class AccountService : EntityService<Account>, IAccountService
                     DoctorId = a.Doctor != null ? a.Doctor.Id : Guid.Empty,
                     DoctorName = a.Doctor != null ? (a.Doctor.Firstname + " " + a.Doctor.Lastname) : string.Empty,
                     CreatedDate = a.CreatedDate,
-                    SignerAddress = "addr_test1qzynfu0alf6jv4v3y006aqrtmrrvq0uxqf5skspzu8julgu0j5g7tqwfr9yzt3qlypl45xjvc6e86gpls4t9gx5ypmqqpge67m",
-                    //SignerAddress = signerWalletAddress != null ? signerWalletAddress.WalletAddress : string.Empty,
-                    WalletAddress = a.Patient.WalletAddress ?? string.Empty,
+                    SignerAddress = signerWalletAddress ?? string.Empty,
+                    WalletAddress = a.Doctor != null ? a.Doctor.WalletAddress : string.Empty,
                 }).FirstOrDefaultAsync();
 
             return result ?? new DataDefaultDto();
@@ -426,6 +468,37 @@ public class AccountService : EntityService<Account>, IAccountService
                         break;
                 }
             }
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> GrantSignPermission(GrantSignRequest grantSignRequest)
+    {
+        try
+        {
+            if (grantSignRequest.OriginId != null)
+            {
+                var accountRoles = await _dbContext.AccountRoles.Where(ar => Guid.Equals(ar.AccountId, grantSignRequest.OriginId) && ar.RoleId == (int)RoleType.MANAGER_SIGN).ToListAsync();
+
+                if (accountRoles.Any())
+                {
+                    _dbContext.AccountRoles.RemoveRange(accountRoles);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+
+            await _dbContext.AccountRoles.AddAsync(new AccountRole
+            {
+                Id = Guid.NewGuid(),
+                AccountId = grantSignRequest.TargetId,
+                RoleId = (int)RoleType.MANAGER_SIGN,
+            });
 
             await _dbContext.SaveChangesAsync();
             return true;

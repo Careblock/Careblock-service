@@ -8,6 +8,7 @@ using Careblock.Model.Web.Result;
 using Careblock.Service.BusinessLogic.Common;
 using Careblock.Service.BusinessLogic.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Text.Json;
 
 namespace Careblock.Service.BusinessLogic;
@@ -84,20 +85,25 @@ public class ResultService : EntityService<Result>, IResultService
             HashName = result.HashName, 
         };
 
-        var signerAddress = "addr_test1qzhtswd5f2fca8e0tea5jlmxs0petdt2zlv0d2xy9m7utzmcjnuv5q4jmja7q2r9t5szrc72sqt2wsczmlpd95z5x2tq8ctu7q";
         var appointment = await _unitOfWork.AppointmentRepository.GetAll()
             .Include(a => a.Doctor) 
             .Include(a => a.Patient)
             .FirstOrDefaultAsync(a => a.Id == result.AppointmentId) ?? throw new AppException("Appointment not found");
 
-        var signerAddresses = new[] {appointment.Doctor.WalletAddress, signerAddress};
+        if (appointment.Doctor == null)
+        {
+            throw new AppException("Must assign appointment to doctor"); 
+        } 
+
+        var signerAddressList = new[] {appointment.Doctor?.WalletAddress, result.ManagerWalletAddress };
 
         var signers = _unitOfWork.AccountRepository.GetAll()
-            .Where(account => signerAddresses.Contains(account.WalletAddress))
+            .Where(account => signerAddressList.Contains(account.WalletAddress))
             .Select(account => new ResultMulSignDto
             {
                 IsSigned = account.WalletAddress == appointment.Doctor.WalletAddress,
-                SignerAddress = account.WalletAddress,
+                SignHash = result.SignHash ?? string.Empty, 
+                SignerAddress = account.WalletAddress ?? string.Empty,
                 SignerName = account.Lastname + account.Firstname,
                 SignedDate = null
             })

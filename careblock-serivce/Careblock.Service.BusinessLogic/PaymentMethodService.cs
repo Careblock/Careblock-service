@@ -2,7 +2,7 @@
 using Careblock.Data.Repository.Interface;
 using Careblock.Model.Database;
 using Careblock.Model.Shared.Common;
-using Careblock.Model.Web.Examination;
+using Careblock.Model.Web.Payment;
 using Careblock.Service.BusinessLogic.Common;
 using Careblock.Service.BusinessLogic.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -69,7 +69,7 @@ public class PaymentMethodService : EntityService<PaymentMethod>, IPaymentMethod
 
     public async Task<bool> Delete(int id)
     {
-        var paymentMethod = await _dbContext.PaymentMethods.Where(mt => Guid.Equals(mt.Id, id)).FirstAsync();
+        var paymentMethod = await _dbContext.PaymentMethods.Where(mt => mt.Id == id).FirstAsync();
         return paymentMethod == null ? throw new AppException("Payment Method not found") : await DeleteById(id);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Careblock.Model.Database;
-using Careblock.Model.Web.Examination;
+using Careblock.Model.Web.Payment;
 
 namespace Careblock.Service.BusinessLogic.Interface;
 

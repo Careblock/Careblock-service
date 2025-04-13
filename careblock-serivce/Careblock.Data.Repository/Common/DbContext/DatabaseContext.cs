@@ -39,6 +39,7 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext, IDbConte
     public virtual DbSet<DoctorSpecialist> DoctorSpecialists { get; set; }
     public virtual DbSet<ExaminationOption> ExaminationOptions { get; set; }
     public virtual DbSet<ExaminationPackage> ExaminationPackages { get; set; }
+    public virtual DbSet<ExaminationPackageReview> ExaminationPackageReviews { get; set; }
     public virtual DbSet<ExaminationPackageOption> ExaminationPackageOptions { get; set; }
     public virtual DbSet<ExaminationType> ExaminationTypes { get; set; }
     public virtual DbSet<ExaminationTypeOrganization> ExaminationTypeOrganizations { get; set; }
@@ -52,6 +53,7 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext, IDbConte
     public virtual DbSet<Payment> Payments { get; set; }
     public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
     public virtual DbSet<Permission> Permissions { get; set; }
+    public virtual DbSet<PermissionRole> PermissionRoles { get; set; }
     public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
     public virtual DbSet<Result> Results { get; set; }
     public virtual DbSet<Role> Roles { get; set; }

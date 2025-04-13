@@ -12,4 +12,6 @@ public class Role
     public virtual ICollection<Permission> Permissions { get; set; }
 
     public virtual ICollection<AccountRole> AccountRoles { get; set; }
+
+    public virtual ICollection<PermissionRole> PermissionRole { get; set; }
 }

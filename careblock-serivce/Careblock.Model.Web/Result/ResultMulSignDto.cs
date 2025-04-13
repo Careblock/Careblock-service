@@ -10,6 +10,8 @@ namespace Careblock.Model.Web.Result
     {
         public string SignerName { get; set; }
         public string SignerAddress { get; set; }
+
+        public string SignHash { get; set; }
         public DateTime? SignedDate { get; set; }
         public bool IsSigned { get; set; }
     }

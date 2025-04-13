@@ -35,7 +35,9 @@ public static class DependenciesInjectionRegister
         builder.Services.AddScoped<IResultService, ResultService>();
         builder.Services.AddScoped<IExaminationTypeService, ExaminationTypeService>();
         builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+        builder.Services.AddScoped<IPaymentService, PaymentService>();
         builder.Services.AddScoped<IExaminationPackageService, ExaminationPackageService>();
+        builder.Services.AddScoped<IExaminationPackageReviewService, ExaminationPackageReviewService>();
         builder.Services.AddScoped<IExaminationOptionService, ExaminationOptionService>();
         builder.Services.AddScoped<IAppointmentDetailService, AppointmentDetailService>();
         builder.Services.AddScoped<IMedicineTypeService, MedicineTypeService>();

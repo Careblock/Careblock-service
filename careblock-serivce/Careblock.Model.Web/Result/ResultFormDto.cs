@@ -13,6 +13,8 @@ public class ResultFormDto
 
     public string? HashName { get; set; }
 
+    public string? ManagerWalletAddress { get; set; }
+
     public string? SignHash { get; set; }
 
     public DateTime? CreatedDate { get; set; } 

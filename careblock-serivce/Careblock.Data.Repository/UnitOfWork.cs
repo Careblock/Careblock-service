@@ -8,6 +8,7 @@ public class UnitOfWork : UnitOfWorkBase, IUnitOfWork
 {
     private AccountRepository _accountRepository;
     private AccountRoleRepository _accountRoleRepository;
+    private PermissionRoleRepository _permissionRoleRepository;
     private RefreshTokenRepository _refreshTokenRepository;
     private OrganizationRepository _organizationRepository;
     private DepartmentRepository _departmentRepository;
@@ -17,9 +18,11 @@ public class UnitOfWork : UnitOfWorkBase, IUnitOfWork
     private RoleRepository _roleRepository;
     private ExaminationTypeRepository _examinationTypeRepository;
     private PaymentMethodRepository _paymentMethodRepository;
+    private PaymentRepository _paymentRepository;
     private MedicineTypeRepository _medicineTypeRepository;
     private MedicineRepository _medicineRepository;
     private ExaminationOptionRepository _examinationOptionRepository;
+    private ExaminationPackageReviewRepository _examinationPackageReviewRepository;
     private TimeSlotRepository _timeSlotRepository;
     private ExaminationPackageRepository _examinationPackageRepository;
     private ExaminationPackageOptionRepository _examinationPackageOptionRepository;
@@ -33,6 +36,8 @@ public class UnitOfWork : UnitOfWorkBase, IUnitOfWork
     public IAccountRepository AccountRepository => _accountRepository ??= new AccountRepository(DbContext);
 
     public IAccountRoleRepository AccountRoleRepository => _accountRoleRepository ??= new AccountRoleRepository(DbContext);
+
+    public IPermissionRoleRepository PermissionRoleRepository => _permissionRoleRepository ??= new PermissionRoleRepository(DbContext);
 
     public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository ??= new RefreshTokenRepository(DbContext);
     
@@ -50,7 +55,9 @@ public class UnitOfWork : UnitOfWorkBase, IUnitOfWork
 
     public IExaminationTypeRepository ExaminationTypeRepository => _examinationTypeRepository ??= new ExaminationTypeRepository(DbContext);
 
-    public IPaymentMethodRepository PaymentMethodRepository => _paymentMethodRepository ??= new Repository.PaymentMethodRepository(DbContext);
+    public IPaymentMethodRepository PaymentMethodRepository => _paymentMethodRepository ??= new PaymentMethodRepository(DbContext);
+
+    public IPaymentRepository PaymentRepository => _paymentRepository ??= new PaymentRepository(DbContext);
 
     public IMedicineTypeRepository MedicineTypeRepository => _medicineTypeRepository ??= new MedicineTypeRepository(DbContext);
     
@@ -63,6 +70,8 @@ public class UnitOfWork : UnitOfWorkBase, IUnitOfWork
     public IExaminationPackageRepository ExaminationPackageRepository => _examinationPackageRepository ??= new ExaminationPackageRepository(DbContext);
 
     public IIExaminationPackageOptionRepository ExaminationPackageOptionRepository => _examinationPackageOptionRepository ??= new ExaminationPackageOptionRepository(DbContext);
+
+    public IExaminationPackageReviewRepository ExaminationPackageReviewRepository => _examinationPackageReviewRepository ??= new Repository.ExaminationPackageReviewRepository(DbContext);
 
     public ISpecialistRepository SpecialistRepository => _specialistRepository ??= new SpecialistRepository(DbContext);
 
