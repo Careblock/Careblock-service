@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Careblock.Data.Repository\Careblock.Data.Repository.csproj" />
+      <ProjectReference Include="..\Careblock.Service.BusinessLogic\Careblock.Service.BusinessLogic.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+      <PackageReference Include="Moq" Version="4.20.72" />
+      <PackageReference Include="xunit" Version="2.9.3" />
+    </ItemGroup>
+
+</Project>

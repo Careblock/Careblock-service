@@ -34,5 +34,7 @@ public interface IDbContext : IDisposable
     /// <param name="propertyName">Property name</param>
     void MarkAsModified(object o, string propertyName);
 
+    public Task<int> SaveChangesAsync();
+
     Task<T> ExecuteStoredProcedure<T>(string storedProcedure, params SqlParameter[] parameters);
 }

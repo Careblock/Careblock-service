@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Careblock.Service.BusinessL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Careblock.Service.Helper", "Careblock.Service.Helper\Careblock.Service.Helper.csproj", "{257F4BEC-BB40-4D4D-8CC8-92C0446C5953}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{68C52032-EB55-4050-B187-3CA18993C125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Careblock.Service.BusinessLogic.Tests", "Careblock.Service.BusinessLogic.Tests\Careblock.Service.BusinessLogic.Tests.csproj", "{946D122E-9702-4868-B612-7606F9B9F88E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +58,10 @@ Global
 		{257F4BEC-BB40-4D4D-8CC8-92C0446C5953}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{257F4BEC-BB40-4D4D-8CC8-92C0446C5953}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{257F4BEC-BB40-4D4D-8CC8-92C0446C5953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{946D122E-9702-4868-B612-7606F9B9F88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{946D122E-9702-4868-B612-7606F9B9F88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{946D122E-9702-4868-B612-7606F9B9F88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{946D122E-9702-4868-B612-7606F9B9F88E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{25EB7022-6B30-4E40-8227-69901FF9BCEC} = {9B83354B-E2E8-48DF-B3C6-2EFCFC932BD9}
@@ -62,5 +70,6 @@ Global
 		{B6948448-EEE8-48EC-BF38-4EA14FE970BD} = {484BBCC4-6E99-47EB-B5A5-6C6202469819}
 		{A9AE5D8C-D080-42BB-B317-B38703EEF85B} = {7089C48F-76BC-40AF-8D20-3C4773B62AE6}
 		{257F4BEC-BB40-4D4D-8CC8-92C0446C5953} = {7089C48F-76BC-40AF-8D20-3C4773B62AE6}
+		{946D122E-9702-4868-B612-7606F9B9F88E} = {68C52032-EB55-4050-B187-3CA18993C125}
 	EndGlobalSection
 EndGlobal

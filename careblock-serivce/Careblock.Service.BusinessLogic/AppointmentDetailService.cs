@@ -14,12 +14,12 @@ namespace Careblock.Service.BusinessLogic;
 public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppointmentDetailService
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly DatabaseContext _dbContext;
+    private readonly IDbContext _dbContext;
     private readonly IStorageService _storageService;
     private readonly IResultService _resultService; 
     private readonly IPaymentService _paymentService;
 
-    public AppointmentDetailService(IUnitOfWork unitOfWork, DatabaseContext dbContext, IStorageService storageService, IResultService resultService, IPaymentService paymentService) : base(unitOfWork, unitOfWork.AppointmentDetailRepository)
+    public AppointmentDetailService(IUnitOfWork unitOfWork, IDbContext dbContext, IStorageService storageService, IResultService resultService, IPaymentService paymentService) : base(unitOfWork, unitOfWork.AppointmentDetailRepository)
     {
         _unitOfWork = unitOfWork;
         _dbContext = dbContext;
@@ -78,18 +78,18 @@ public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppoi
         try
         {
             // Move appointment to checked in tab
-            var appointment = await _dbContext.Appointments.Where(x => Guid.Equals(x.Id, appointmentDetailForm.AppointmentId)).FirstAsync() ?? throw new AppException("Appointment not found");
+            var appointment = await _dbContext.Set<Appointment>().Where(x => Guid.Equals(x.Id, appointmentDetailForm.AppointmentId)).FirstAsync() ?? throw new AppException("Appointment not found");
 
-            var theDoctor = await _dbContext.Accounts.Where(x => Guid.Equals(x.Id, appointmentDetailForm.DoctorId)).FirstAsync();
+            var theDoctor = await _dbContext.Set<Account>().Where(x => Guid.Equals(x.Id, appointmentDetailForm.DoctorId)).FirstAsync();
             
             appointment.Status = AppointmentStatus.CheckedIn;
             appointment.DoctorId = appointmentDetailForm.DoctorId;
             appointment.Doctor = theDoctor;
 
-            _dbContext.Appointments.Update(appointment);
+            _dbContext.Set<Appointment>().Update(appointment);
 
             // Get total price
-            var totalPrice = _dbContext.ExaminationOptions.Join(_dbContext.ExaminationPackageOptions,
+            var totalPrice = _dbContext.Set<ExaminationOption>().Join(_dbContext.Set<ExaminationPackageOption>(),
                         eo => eo.Id,
                         epo => epo.ExaminationOptionId,
                         (eo, epo) => new { eo, epo })
@@ -106,7 +106,7 @@ public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppoi
                 Diagnostic = appointmentDetailForm.Diagnostic,
                 Price = totalPrice,
             };
-            await _dbContext.AppointmentDetails.AddAsync(newAppointmentDetail);
+            await _dbContext.Set<AppointmentDetail>().AddAsync(newAppointmentDetail);
 
             // Insert file pdf to azure storage
             var pdfUrl = await _storageService.UploadFile(appointmentDetailForm.FilePDF);
@@ -125,8 +125,8 @@ public class AppointmentDetailService : EntityService<AppointmentDetail>, IAppoi
                 ModifiedDate = DateTime.Now,
             });
 
-            var examinationPackage = await _dbContext.ExaminationPackages.Where(x => Guid.Equals(x.Id, appointment.ExaminationPackageId)).FirstAsync() ?? throw new AppException("Examination Package not found");
-            var paymentMethod = await _dbContext.PaymentMethods.FirstAsync() ?? throw new AppException("Payment Method not found");
+            var examinationPackage = await _dbContext.Set<ExaminationPackage>().Where(x => Guid.Equals(x.Id, appointment.ExaminationPackageId)).FirstAsync() ?? throw new AppException("Examination Package not found");
+            var paymentMethod = await _dbContext.Set<PaymentMethod>().FirstAsync() ?? throw new AppException("Payment Method not found");
 
             // Insert payment into db
             await _paymentService.Create(new PaymentFormDto

@@ -16,6 +16,11 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext, IDbConte
         this.Entry(o).Property(propertyName).IsModified = true;
     }
 
+    public Task<int> SaveChangesAsync()
+    {
+        return base.SaveChangesAsync();
+    }
+
     public async Task<T> ExecuteStoredProcedure<T>(string storedProcedure, params SqlParameter[] parameters)
     {
         await Database.ExecuteSqlRawAsync($"EXEC {storedProcedure}", parameters);

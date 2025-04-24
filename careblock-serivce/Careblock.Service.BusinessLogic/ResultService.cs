@@ -17,9 +17,9 @@ public class ResultService : EntityService<Result>, IResultService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IStorageService _storageService;
-    private readonly DatabaseContext _dbContext;
+    private readonly IDbContext _dbContext;
 
-    public ResultService(IUnitOfWork unitOfWork, IStorageService storageService, DatabaseContext dbContext) : base(unitOfWork, unitOfWork.ResultRepository)
+    public ResultService(IUnitOfWork unitOfWork, IStorageService storageService, IDbContext dbContext) : base(unitOfWork, unitOfWork.ResultRepository)
     {
         _unitOfWork = unitOfWork;
         _storageService = storageService;
@@ -35,7 +35,7 @@ public class ResultService : EntityService<Result>, IResultService
 
     public async Task<BillDto> GetBill(Guid appointmentId)
     {
-        var result = await _dbContext.Appointments
+        var result = await _dbContext.Set<Appointment>()
         .Where(app => app.Id == appointmentId)
         .Select(app => new BillDto
         {
@@ -48,7 +48,7 @@ public class ResultService : EntityService<Result>, IResultService
             OrganizationName = app.Organization.Name,
             CreatedDate = DateTime.Now,
             ExaminationPackageName = app.ExaminationPackage.Name,
-            ExaminationOptions = app.ExaminationPackage.ExaminationPackageOptions.Select(x => x).Join(_dbContext.ExaminationOptions,
+            ExaminationOptions = app.ExaminationPackage.ExaminationPackageOptions.Select(x => x).Join(_dbContext.Set<ExaminationOption>(),
              epo => epo.ExaminationOptionId,
              exo => exo.Id,
             (epo, exo) => exo).Select(x => new ExaminationOptionDto
@@ -58,7 +58,7 @@ public class ResultService : EntityService<Result>, IResultService
                 Name = x.Name,
                 Price = x.Price,
             }).ToList(),
-            TotalPrice = app.ExaminationPackage.ExaminationPackageOptions.Select(x => x).Join(_dbContext.ExaminationOptions,
+            TotalPrice = app.ExaminationPackage.ExaminationPackageOptions.Select(x => x).Join(_dbContext.Set<ExaminationOption>(),
              epo => epo.ExaminationOptionId,
              exo => exo.Id,
             (epo, exo) => exo).Select(x => new ExaminationOptionDto
@@ -151,7 +151,7 @@ public class ResultService : EntityService<Result>, IResultService
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
 
-        if ((lstSigner == null || !lstSigner.Any(x => x.SignerAddress == input.SignerAddress))
+        if ((lstSigner == null || lstSigner.All(x => x.SignerAddress != input.SignerAddress))
             && input.SignerAddress != signer?.WalletAddress)
         {
             throw new AppException("Signer not exist");
