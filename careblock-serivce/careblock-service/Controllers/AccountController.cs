@@ -74,6 +74,8 @@ public class AccountController : BaseController
     public async Task<ApiResponse<DataDefaultDto>> GetDataDefault([FromRoute] Guid appointmentId)
     {
         var result = await _accountService.GetDataDefault(appointmentId);
+        var patient = await _accountService.GetById(result.PatientId.GetValueOrDefault());
+        result.DateOfBirth = patient.DateOfBirth.GetValueOrDefault();
         return new ApiResponse<DataDefaultDto>(result, true);
     }
 
