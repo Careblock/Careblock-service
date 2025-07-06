@@ -1,4 +1,5 @@
-﻿using Careblock.Data.Repository.Common.DbContext;
+﻿using Careblock.Data.Repository;
+using Careblock.Data.Repository.Common.DbContext;
 using Careblock.Data.Repository.Interface;
 using Careblock.Model.Database;
 using Careblock.Model.Shared.Common;
@@ -280,5 +281,14 @@ public class AppointmentService : EntityService<Appointment>, IAppointmentServic
         await UpdateAsync(app);
 
         return true;
+    }
+
+    public async Task<bool> IsDuplicated(AppointmentFormDto dto)
+    {
+        return await _dbContext.Appointments.AnyAsync(x =>
+            x.StartDateExpectation == dto.StartDateExpectation &&
+            x.EndDateExpectation == dto.EndDateExpectation &&
+            x.ExaminationPackageId == dto.ExaminationPackageId
+        );
     }
 }

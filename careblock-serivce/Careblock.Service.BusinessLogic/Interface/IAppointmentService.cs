@@ -15,4 +15,5 @@ public interface IAppointmentService
     Task<int> AssignDoctor(Guid appointmentId, NotAssignedRequest request); 
     Task<bool> Update(AppointmentDto appointment); 
     Task<bool> Delete(Guid id);
+    Task<bool> IsDuplicated(AppointmentFormDto appointment);
 }
