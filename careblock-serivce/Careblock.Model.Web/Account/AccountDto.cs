@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Careblock.Model.Web.Department;
+using Careblock.Model.Web.Organization;
 
 namespace Careblock.Model.Web.Account;
 
@@ -8,6 +9,8 @@ public class AccountDto
     public Guid Id { get; set; }
 
     public DepartmentDto? Department { get; set; }
+
+    public OrganizationDto? Organization { get; set; }
 
     public string StakeId { get; set; } = string.Empty;
 

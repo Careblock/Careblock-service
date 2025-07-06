@@ -15,10 +15,12 @@ namespace careblock_service.Controllers;
 public class AccountController : BaseController
 {
     private readonly IAccountService _accountService;
-    
-    public AccountController(IAccountService accountService)
+    private readonly IOrganizationService _organizationService;
+
+    public AccountController(IAccountService accountService, IOrganizationService organizationService)
     {
         _accountService = accountService;
+        _organizationService = organizationService;
     }
 
     #region GET
@@ -33,6 +35,10 @@ public class AccountController : BaseController
         {
             isSucccess = false;
             result = null;
+        } else
+        {
+            var organization = await _organizationService.GetByUserId(id);
+            result.Organization = organization;
         }
         return new ApiResponse<AccountDto?>(result, isSucccess);
     }
