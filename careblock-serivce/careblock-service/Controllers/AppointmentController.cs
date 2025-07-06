@@ -85,8 +85,27 @@ public class AppointmentController : BaseController
     [HttpPost("create")]
     public async Task<ApiResponse<Guid>> Create([FromBody] AppointmentFormDto appointment)
     {
+        var isDuplicated = await _appointmentService.IsDuplicated(appointment);
+
+        if (isDuplicated)
+        {
+            return new ApiResponse<Guid>
+            {
+                Success = false,
+                Message = "Appointments already exist for this time period and package.",
+                Data = Guid.Empty
+            };
+        }
+
         var result = await _appointmentService.Create(appointment);
-        if (Guid.Equals(result, Guid.Empty)) return new ApiResponse<Guid>(result, false);
+        if (result == Guid.Empty)
+        {
+            return new ApiResponse<Guid>(result, false)
+            {
+                Message = "Appointment creation failed."
+            };
+        }
+
         return new ApiResponse<Guid>(result);
     }
 

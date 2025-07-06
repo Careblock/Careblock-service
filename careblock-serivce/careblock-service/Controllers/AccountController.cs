@@ -15,10 +15,12 @@ namespace careblock_service.Controllers;
 public class AccountController : BaseController
 {
     private readonly IAccountService _accountService;
-    
-    public AccountController(IAccountService accountService)
+    private readonly IOrganizationService _organizationService;
+
+    public AccountController(IAccountService accountService, IOrganizationService organizationService)
     {
         _accountService = accountService;
+        _organizationService = organizationService;
     }
 
     #region GET
@@ -33,6 +35,10 @@ public class AccountController : BaseController
         {
             isSucccess = false;
             result = null;
+        } else
+        {
+            var organization = await _organizationService.GetByUserId(id);
+            result.Organization = organization;
         }
         return new ApiResponse<AccountDto?>(result, isSucccess);
     }
@@ -74,6 +80,8 @@ public class AccountController : BaseController
     public async Task<ApiResponse<DataDefaultDto>> GetDataDefault([FromRoute] Guid appointmentId)
     {
         var result = await _accountService.GetDataDefault(appointmentId);
+        var patient = await _accountService.GetById(result.PatientId.GetValueOrDefault());
+        result.DateOfBirth = patient.DateOfBirth.GetValueOrDefault();
         return new ApiResponse<DataDefaultDto>(result, true);
     }
 
